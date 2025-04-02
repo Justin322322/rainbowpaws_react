@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import Link from 'next/link';
 import { Menu, Heart } from 'lucide-react';
+import { AuthButtons } from '@/components/auth/auth-buttons';
 
 export function Navigation() {
   const scrollToSection = (sectionId: string) => {
@@ -57,22 +58,12 @@ export function Navigation() {
         </NavigationMenu.Root>
 
         <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            asChild
-            className="hidden md:inline-flex text-secondary-foreground/80 hover:text-primary hover:bg-accent/5 transition-all duration-200"
-          >
-            <Link href="/login">Login</Link>
-          </Button>
-          <Button
-            size="sm"
-            asChild
-            className="bg-accent hover:bg-accent/90 text-white transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.02] focus:scale-[1.02] border-none"
-          >
-            <Link href="/join">Join Us</Link>
-          </Button>
+          {/* Desktop auth buttons */}
+          <div className="hidden md:block">
+            <AuthButtons />
+          </div>
 
+          {/* Mobile menu button */}
           <Button
             variant="ghost"
             size="sm"
