@@ -20,26 +20,27 @@ export function OurPromise() {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-gray-50" id="our-promise">
+    <section className="py-24 bg-background" id="our-promise">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-20">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Our Promise to You</h2>
-          <p className="text-gray-600 text-lg">Committed to providing compassionate and dignified services</p>
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-3xl md:text-4xl font-playfair font-bold mb-6 text-primary">Our Promise to You</h2>
+          <div className="w-24 h-0.5 bg-accent mx-auto mb-6"></div>
+          <p className="text-secondary-foreground/80 text-lg">Committed to providing compassionate and dignified services</p>
         </div>
         
-        <div className="grid md:grid-cols-3 gap-12 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {promises.map((promise) => (
             <div 
               key={promise.title} 
-              className="bg-white rounded-2xl shadow-lg p-8"
+              className="bg-secondary/80 rounded-sm p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-primary/10 hover:border-primary/20"
             >
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary/10 to-primary/5 mb-8">
-                <promise.icon className="w-10 h-10 text-primary" />
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-accent/10 mb-6">
+                <promise.icon className="w-8 h-8 text-accent" />
               </div>
-              <h3 className="text-2xl font-semibold mb-4 text-gray-800">
+              <h3 className="text-2xl font-playfair font-semibold mb-4 text-primary">
                 {promise.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed">
+              <p className="text-secondary-foreground/80 leading-relaxed">
                 {promise.description}
               </p>
             </div>
