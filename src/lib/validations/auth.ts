@@ -26,9 +26,18 @@ const serviceProviderSchema = z.object({
   businessPhone: z.string().min(8, 'Please enter a valid phone number'),
   businessEmail: z.string().email('Please enter a valid business email address'),
   businessDescription: z.string().min(20, 'Please provide a detailed business description (minimum 20 characters)'),
-  birCertificate: z.instanceof(File, { message: 'BIR Certificate is required' }),
-  businessPermit: z.instanceof(File, { message: 'Business Permit is required' }),
-  governmentId: z.instanceof(File, { message: 'Government ID is required' }),
+  birCertificate: z.any().refine((file) => {
+    if (typeof window === 'undefined') return true;
+    return file instanceof File;
+  }, { message: 'BIR Certificate is required' }),
+  businessPermit: z.any().refine((file) => {
+    if (typeof window === 'undefined') return true;
+    return file instanceof File;
+  }, { message: 'Business Permit is required' }),
+  governmentId: z.any().refine((file) => {
+    if (typeof window === 'undefined') return true;
+    return file instanceof File;
+  }, { message: 'Government ID is required' }),
   password: z.string()
     .min(8, 'Password must be at least 8 characters')
     .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, 'Password must contain at least one uppercase letter, one lowercase letter, and one number'),
@@ -43,7 +52,6 @@ export const signupSchema = z.discriminatedUnion('userType', [
   furParentSchema,
   serviceProviderSchema
 ])
-
 // Refine the schema to check password confirmation
 .refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
