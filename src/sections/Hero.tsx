@@ -70,26 +70,34 @@ export function Hero() {
     >
       {/* Video Background & Overlay */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-primary/50 to-background z-20" />
-        <div className="absolute inset-0 bg-primary/30 mix-blend-multiply z-10" />
+        {/* Enhanced multi-layered gradient overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/95 via-primary/80 to-background/90 z-20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-black/60 z-15" />
+        <div className="absolute inset-0 bg-black/20 z-10" /> {/* Additional overlay for better text contrast */}
         <video
-          autoPlay muted loop playsInline preload="auto"
+          autoPlay muted loop playsInline
+          preload="auto"
           className="w-full h-full object-cover scale-105 transform blur-[3px]"
           aria-hidden="true"
+          ref={(el) => {
+            if (el) {
+              el.playbackRate = 0.75;
+            }
+          }}
         >
           <source src="/media/hero-background.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
       </div>
 
-      {/* Cloud Layer */}
+      {/* Enhanced Cloud Layer with better visibility */}
       <div className="absolute inset-0 z-[25] pointer-events-none overflow-visible">
         {clouds.map((cloud, index) => (
           <img
             key={index}
             src="/media/cloud.png"
             alt=""
-            className="absolute max-w-[90vw]"
+            className="absolute max-w-[90vw] mix-blend-screen"
             style={getCloudStyles(
               cloud.x,
               cloud.y,
@@ -103,45 +111,53 @@ export function Hero() {
       {/* Content */}
       <div className="relative z-30 container mx-auto px-4">
         <div className="text-center max-w-4xl mx-auto">
-          {/* Staggered Animation Content */}
+          {/* Enhanced main heading with stronger text-shadow */}
           <h1
-            className={`text-4xl md:text-6xl lg:text-7xl font-playfair font-bold mb-6 leading-tight animate-fade-down ${getDelay(1)}`}
-
+            className={`text-4xl md:text-6xl lg:text-7xl font-playfair font-bold mb-4 leading-tight animate-fade-down text-white [text-shadow:_3px_3px_6px_rgb(0_0_0_/_60%)] ${getDelay(1)}`}
           >
-            Rainbow <span className="text-accent animate-pulse-slow">Paws</span>
+            Rainbow <span className="text-[#FF8A2B] font-bold [text-shadow:_2px_2px_4px_rgb(0_0_0_/_60%),_0_0_20px_rgba(255,138,43,0.4)]">Paws</span>
           </h1>
+          
+          {/* Enhanced tagline with better visibility */}
+          <p className={`text-xl md:text-2xl mb-6 text-white/95 font-semibold [text-shadow:_2px_2px_4px_rgb(0_0_0_/_50%)] ${getDelay(2)}`}>
+            Honoring Your Pet's Memory with Grace
+          </p>
+
           <div
-            className={`w-28 h-[1px] bg-gradient-to-r from-transparent via-accent/70 to-transparent mx-auto mb-8 animate-fade-right ${getDelay(2)}`}
-
+            className={`w-28 h-[1px] bg-gradient-to-r from-transparent via-white to-transparent mx-auto mb-8 animate-fade-right ${getDelay(3)}`}
           />
+          
+          {/* Main description text */}
           <p
-            className={`text-lg md:text-xl mb-12 text-white/95 max-w-2xl mx-auto leading-relaxed animate-fade-up ${getDelay(3)}`}
-
+            className={`text-xl md:text-2xl mb-12 text-white/95 max-w-2xl mx-auto leading-relaxed animate-fade-up ${getDelay(4)} [text-shadow:_1px_1px_3px_rgb(0_0_0_/_50%)]`}
           >
             Providing dignified and compassionate memorial services for your
             beloved companions with{' '}
-            <span className="text-accent/90 font-medium">grace</span> and{' '}
-            <span className="text-accent/90 font-medium">respect</span>.
+            <span className="text-[#FF8A2B]/95 font-medium [text-shadow:_1px_1px_2px_rgb(0_0_0_/_40%)]">grace</span> and{' '}
+            <span className="text-[#FF8A2B]/95 font-medium [text-shadow:_1px_1px_2px_rgb(0_0_0_/_40%)]">respect</span>.
           </p>
-          <div
-            className={`flex flex-col sm:flex-row justify-center items-center gap-y-4 gap-x-6 animate-fade-up ${getDelay(4)}`}
 
+          {/* Enhanced button styling with consistent heights and rounded corners */}
+          <div
+            className={`flex flex-col sm:flex-row justify-center items-stretch gap-y-4 gap-x-6 animate-fade-up ${getDelay(5)}`}
           >
-            {/* Improved Button Styles */}
             <Button
               size="lg" asChild
-              className="bg-accent hover:bg-accent/90 text-white font-semibold tracking-wide transition-all duration-300 border-none shadow-lg hover:shadow-xl transform hover:scale-[1.03] hover:-translate-y-1 animate-float group w-full sm:w-auto"
+              variant="default"
+              className="group transition-all duration-300 hover:scale-[1.02] hover:shadow-lg rounded-xl min-h-[3.5rem] hover:shadow-primary/20"
             >
-              <Link href="/start" className="relative overflow-hidden px-8 py-3">
+              <Link href="/start" className="relative overflow-hidden px-8">
                 <span className="relative z-10">Begin Your Journey</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
               </Link>
             </Button>
             <Button
-              variant="outline" size="lg" asChild
-              className="bg-white/5 text-white hover:bg-white/15 border-white/30 hover:border-white/50 backdrop-blur-sm transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-[1.03] hover:-translate-y-1 animate-float-delay font-medium w-full sm:w-auto"
+              variant="outline" 
+              size="lg" 
+              asChild
+              className="border-white/40 hover:border-white text-white hover:text-white bg-black/20 hover:bg-black/30 backdrop-blur-sm transition-all duration-300 hover:scale-[1.02] hover:shadow-lg rounded-xl min-h-[3.5rem] hover:shadow-accent/20"
             >
-              <Link href="/providers" className="px-8 py-3">
+              <Link href="/providers" className="px-8">
                 Join Our Provider Network
               </Link>
             </Button>
@@ -149,15 +165,22 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Enhanced Scroll Indicator (z-40) */}
+      {/* Enhanced Scroll Indicator */}
       <div
         className={`absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce-slow z-40 ${getDelay(7)}`}
-
       >
-        <div className="relative group cursor-pointer">
-          <div className="absolute -inset-2.5 bg-accent/15 rounded-full blur-lg animate-pulse group-hover:scale-110 transition-transform duration-300" />
+        <div 
+          className="relative group cursor-pointer"
+          onClick={() => {
+            const memorialSection = document.getElementById('memorial-services');
+            if (memorialSection) {
+              memorialSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          }}
+        >
+          <div className="absolute -inset-2.5 bg-primary/20 rounded-full blur-lg animate-pulse group-hover:scale-110 transition-transform duration-300" />
           <ChevronDown
-            className="w-9 h-9 text-white/80 relative z-10 group-hover:text-white transition-colors"
+            className="w-9 h-9 text-white relative z-10 group-hover:text-accent transition-colors duration-300"
             strokeWidth={1.25}
           />
         </div>

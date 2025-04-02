@@ -73,6 +73,12 @@ body {
   color: hsl(var(--foreground));
 }
 
+/* Custom Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+  scroll-timeline-duration: 0.5s;
+}
+
 /* Navigation Menu Styles */
 .NavigationMenuContent {
   position: absolute;
