@@ -16,7 +16,6 @@ import { supabase } from '@/lib/supabase'
 import { useRouter } from 'next/navigation'
 
 export function LoginDialog() {
-  const [showUserTypeDialog, setShowUserTypeDialog] = useState(false)
   const [isOpen, setIsOpen] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -109,12 +108,12 @@ export function LoginDialog() {
         <DialogTrigger asChild id="login-trigger">
           <Button variant="outline">Login</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-[425px] p-6">
-          <DialogHeader className="space-y-3 mb-6">
-            <DialogTitle className="text-2xl font-playfair text-center text-foreground">
-              {isResetPassword ? 'Reset Password' : 'Login'}
+        <DialogContent className="sm:max-w-[425px] p-8 max-h-[85vh] overflow-y-auto custom-scrollbar">
+          <DialogHeader className="space-y-4 mb-8">
+            <DialogTitle className="text-3xl font-playfair text-center text-foreground">
+              {isResetPassword ? 'Reset Password' : 'Welcome Back'}
             </DialogTitle>
-            <DialogDescription className="text-center text-muted-foreground">
+            <DialogDescription className="text-center text-base text-muted-foreground">
               {isResetPassword 
                 ? 'Enter your email address and we will send you a password reset link.'
                 : 'Please enter your credentials to continue.'}
@@ -123,13 +122,13 @@ export function LoginDialog() {
           
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             {authError && (
-              <div className="p-3 bg-red-100 border border-red-300 rounded-md text-red-600 text-sm">
+              <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg text-destructive text-sm">
                 {authError}
               </div>
             )}
 
             {resetSuccess && (
-              <div className="p-3 bg-green-100 border border-green-300 rounded-md text-green-600 text-sm">
+              <div className="p-4 bg-green-100 border border-green-200 rounded-lg text-green-600 text-sm">
                 Password reset link has been sent to your email address.
               </div>
             )}
@@ -141,12 +140,12 @@ export function LoginDialog() {
                   {...register('email')}
                   type="email"
                   id="email"
-                  className="w-full px-4 py-2 bg-background border border-input rounded-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
+                  className="w-full px-4 py-2.5 bg-background border-2 border-input rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors"
                   placeholder="Enter your email"
                   disabled={isLoading}
                 />
                 {errors.email && (
-                  <p className="text-sm text-red-500 mt-1">{errors.email.message}</p>
+                  <p className="text-sm text-destructive mt-1">{errors.email.message}</p>
                 )}
               </div>
 
@@ -158,7 +157,7 @@ export function LoginDialog() {
                       {...register('password')}
                       type={showPassword ? "text" : "password"}
                       id="password"
-                      className="w-full px-4 py-2 bg-background border border-input rounded-md focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors pr-10"
+                      className="w-full px-4 py-2.5 bg-background border-2 border-input rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-colors pr-10"
                       placeholder="Enter your password"
                       disabled={isLoading}
                     />
@@ -172,48 +171,51 @@ export function LoginDialog() {
                     </button>
                   </div>
                   {errors.password && (
-                    <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>
+                    <p className="text-sm text-destructive mt-1">{errors.password.message}</p>
                   )}
                 </div>
               )}
             </div>
 
-            <div className="flex justify-between items-center">
-              <button
-                type="button"
-                onClick={() => {
-                  setIsOpen(false)
-                  document.getElementById('signup-trigger')?.click()
-                }}
-                className="text-sm text-primary hover:text-primary/80 transition-colors"
+            <div className="flex flex-col space-y-4">
+              <Button
+                type={isResetPassword ? "button" : "submit"}
+                onClick={isResetPassword ? handleResetPassword : undefined}
+                className="w-full bg-primary hover:bg-primary/90 py-2.5 rounded-lg text-base"
                 disabled={isLoading}
               >
-                Don't have an account? Sign up
-              </button>
-              <button
-                type="button"
-                className="text-sm text-primary hover:text-primary/80 transition-colors"
-                onClick={() => {
-                  setAuthError(null)
-                  setResetSuccess(false)
-                  setIsResetPassword(!isResetPassword)
-                }}
-                disabled={isLoading}
-              >
-                {isResetPassword ? 'Back to Login' : 'Forgot Password?'}
-              </button>
-            </div>
+                {isLoading 
+                  ? (isResetPassword ? 'Sending...' : 'Signing in...') 
+                  : (isResetPassword ? 'Send Reset Link' : 'Sign In')}
+              </Button>
 
-            <Button
-              type={isResetPassword ? "button" : "submit"}
-              onClick={isResetPassword ? handleResetPassword : undefined}
-              className="w-full bg-primary hover:bg-primary/90"
-              disabled={isLoading}
-            >
-              {isLoading 
-                ? (isResetPassword ? 'Sending...' : 'Signing in...') 
-                : (isResetPassword ? 'Send Reset Link' : 'Sign In')}
-            </Button>
+              <div className="flex flex-col space-y-2 text-center">
+                <button
+                  type="button"
+                  className="text-sm text-primary hover:text-primary/80 transition-colors font-medium"
+                  onClick={() => {
+                    setAuthError(null)
+                    setResetSuccess(false)
+                    setIsResetPassword(!isResetPassword)
+                  }}
+                  disabled={isLoading}
+                >
+                  {isResetPassword ? 'Back to Login' : 'Forgot Password?'}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsOpen(false)
+                    document.getElementById('signup-trigger')?.click()
+                  }}
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  disabled={isLoading}
+                >
+                  Don't have an account? <span className="text-primary font-medium">Sign up</span>
+                </button>
+              </div>
+            </div>
           </form>
         </DialogContent>
       </Dialog>

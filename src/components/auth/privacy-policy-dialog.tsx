@@ -10,24 +10,23 @@ interface PrivacyPolicyDialogProps {
 export function PrivacyPolicyDialog({ open, onOpenChange, onAccept }: PrivacyPolicyDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[600px] p-6">
-        <DialogHeader className="space-y-3 mb-6">
-          <DialogTitle className="text-2xl font-playfair text-center text-foreground">Privacy Policy</DialogTitle>
-          <DialogDescription className="text-center text-muted-foreground">
+      <DialogContent className="sm:max-w-[600px] max-h-[85vh] overflow-y-auto p-8 custom-scrollbar">
+        <DialogHeader className="space-y-4 mb-8">
+          <DialogTitle className="text-3xl font-playfair text-center text-foreground">Privacy Policy</DialogTitle>
+          <DialogDescription className="text-center text-base text-muted-foreground">
             Please read our privacy policy carefully before proceeding.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4 text-foreground/80">
-          {/* Privacy policy content */}
-          <p>
+        <div className="space-y-6 text-foreground/80">
+          <p className="text-base leading-relaxed">
             At Rainbow Paws, we take your privacy seriously. This Privacy Policy describes how we collect, use, and protect your personal information.
           </p>
 
-          <div className="space-y-2">
-            <h3 className="font-medium text-foreground">Information We Collect</h3>
-            <p>We collect information that you provide directly to us, including:</p>
-            <ul className="list-disc pl-6 space-y-1">
+          <div className="space-y-3">
+            <h3 className="text-lg font-semibold text-foreground">Information We Collect</h3>
+            <p className="text-base leading-relaxed">We collect information that you provide directly to us, including:</p>
+            <ul className="list-disc pl-6 space-y-2 text-base">
               <li>Name and contact information</li>
               <li>Account credentials</li>
               <li>Business information (for service providers)</li>
@@ -35,10 +34,10 @@ export function PrivacyPolicyDialog({ open, onOpenChange, onAccept }: PrivacyPol
             </ul>
           </div>
 
-          <div className="space-y-2">
-            <h3 className="font-medium text-foreground">How We Use Your Information</h3>
-            <p>We use the information we collect to:</p>
-            <ul className="list-disc pl-6 space-y-1">
+          <div className="space-y-3">
+            <h3 className="text-lg font-semibold text-foreground">How We Use Your Information</h3>
+            <p className="text-base leading-relaxed">We use the information we collect to:</p>
+            <ul className="list-disc pl-6 space-y-2 text-base">
               <li>Provide and improve our services</li>
               <li>Process your transactions</li>
               <li>Communicate with you</li>
@@ -46,9 +45,9 @@ export function PrivacyPolicyDialog({ open, onOpenChange, onAccept }: PrivacyPol
             </ul>
           </div>
 
-          <div className="space-y-2">
-            <h3 className="font-medium text-foreground">Data Security</h3>
-            <p>
+          <div className="space-y-3">
+            <h3 className="text-lg font-semibold text-foreground">Data Security</h3>
+            <p className="text-base leading-relaxed">
               We implement appropriate security measures to protect your personal information from unauthorized access, alteration, or disclosure.
             </p>
           </div>
@@ -56,9 +55,9 @@ export function PrivacyPolicyDialog({ open, onOpenChange, onAccept }: PrivacyPol
 
         <div className="flex justify-end space-x-4 mt-8">
           <Button
-            variant="ghost"
+            variant="outline"
             onClick={() => onOpenChange(false)}
-            className="hover:bg-accent/10"
+            className="px-6 py-2.5 text-base border-2"
           >
             Close
           </Button>
@@ -67,7 +66,7 @@ export function PrivacyPolicyDialog({ open, onOpenChange, onAccept }: PrivacyPol
               onAccept()
               onOpenChange(false)
             }}
-            className="bg-primary hover:bg-primary/90"
+            className="px-6 py-2.5 text-base bg-primary hover:bg-primary/90"
           >
             Accept
           </Button>

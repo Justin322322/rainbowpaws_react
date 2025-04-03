@@ -104,7 +104,7 @@ export function FurParentSignup({ onShowPrivacyPolicy }: FurParentSignupProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6 max-w-2xl mx-auto overflow-y-auto custom-scrollbar pr-2">
       {authError && (
         <div className={`p-3 border rounded-md text-sm ${
           isSuccess 
@@ -244,4 +244,4 @@ export function FurParentSignup({ onShowPrivacyPolicy }: FurParentSignupProps) {
       </Button>
     </form>
   )
-} 
+}

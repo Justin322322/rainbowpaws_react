@@ -7,7 +7,7 @@ import { WhyChoose } from '@/sections/WhyChoose';
 
 export default function Home() {
   return (
-    <main>
+    <main className="custom-scrollbar">
       <Navigation />
       <Hero />
       <MemorialServices />

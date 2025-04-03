@@ -14,7 +14,7 @@ export default async function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-background">
-      <main className="container mx-auto py-6 px-4">
+      <main className="container mx-auto py-6 px-4 overflow-y-auto custom-scrollbar max-h-[calc(100vh-4rem)]">
         {children}
       </main>
     </div>

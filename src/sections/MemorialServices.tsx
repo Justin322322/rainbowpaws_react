@@ -76,7 +76,7 @@ export function MemorialServices() {
               >
                 {/* Front of card */}
                 <div 
-                  className="absolute inset-0 w-full h-full overflow-auto backface-hidden bg-background/80 rounded-sm p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-primary/10 hover:border-primary/20"
+                  className="absolute inset-0 w-full h-full overflow-auto custom-scrollbar backface-hidden bg-background/80 rounded-sm p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-primary/10 hover:border-primary/20"
                 >
                   <div className="h-full flex flex-col">
                     <div className="flex-grow">
@@ -132,7 +132,7 @@ export function MemorialServices() {
 
                 {/* Back of card */}
                 <div 
-                  className="absolute inset-0 w-full h-full overflow-auto backface-hidden bg-background/80 rounded-sm p-8 shadow-xl border border-primary/20 rotate-y-180"
+                  className="absolute inset-0 w-full h-full overflow-auto custom-scrollbar backface-hidden bg-background/80 rounded-sm p-8 shadow-xl border border-primary/20 rotate-y-180"
                 >
                   <div className="h-full flex flex-col">
                     <div className="flex-grow">
