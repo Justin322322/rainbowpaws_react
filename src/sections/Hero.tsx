@@ -3,36 +3,56 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { ChevronDown } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, useCallback } from 'react';
 
 // Helper for animation delays
 const getDelay = (step: number) => `delay-${step * 150}`;
 
+// Static cloud configurations
+const CLOUDS = [
+  { x: -5, y: 0, size: 20, speed: 0.15 },
+  { x: 50, y: -5, size: 26, speed: 0.2 },
+  { x: 105, y: -2, size: 22, speed: 0.25 },
+  { x: 20, y: -8, size: 16, speed: 0.18 },
+  { x: 80, y: -10, size: 18, speed: 0.22 },
+  { x: -15, y: -12, size: 24, speed: 0.17 },
+  { x: 35, y: -3, size: 19, speed: 0.23 },
+  { x: 65, y: -7, size: 21, speed: 0.19 },
+  { x: 95, y: -15, size: 17, speed: 0.21 },
+  { x: 10, y: -6, size: 23, speed: 0.16 }
+] as const;
+
 export function Hero() {
   const [scrollY, setScrollY] = useState(0);
 
-  useEffect(() => {
-    const handleScroll = () => {
+  // Debounced scroll handler
+  const handleScroll = useCallback(() => {
+    let ticking = false;
+    if (!ticking) {
       requestAnimationFrame(() => {
         setScrollY(window.scrollY);
+        ticking = false;
       });
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+      ticking = true;
+    }
   }, []);
 
-  // Calculate cloud visibility and position based on scroll
-  const getCloudStyles = (
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
+  // Memoized cloud styles calculation
+  const getCloudStyles = useCallback((
     initialX: number,
     initialY: number,
     size: number,
     speed: number = 0.3
   ) => {
-    // Start showing clouds at bottom of viewport
     const startY = 100;
     const scrollProgress = Math.max(0, Math.min(1, scrollY / 600));
     const opacity = initialY > startY ? 0 : 0.5;
-    const scale = 1 + (scrollProgress * 0.5); // Scale from 1x to 1.5x
+    const scale = 1 + (scrollProgress * 0.5);
     
     return {
       position: 'absolute' as const,
@@ -45,67 +65,69 @@ export function Hero() {
       filter: 'blur(0.5px)',
       transformOrigin: 'center center',
     };
-  };
+  }, [scrollY]);
 
-  const clouds = [
-    // Original clouds
-    { x: -5, y: 0, size: 20, speed: 0.15 },     // Left cloud
-    { x: 50, y: -5, size: 26, speed: 0.2 },     // Center cloud
-    { x: 105, y: -2, size: 22, speed: 0.25 },   // Right cloud
-    { x: 20, y: -8, size: 16, speed: 0.18 },    // Small left cloud
-    { x: 80, y: -10, size: 18, speed: 0.22 },   // Small right cloud
-    // Additional clouds
-    { x: -15, y: -12, size: 24, speed: 0.17 },  // Far left cloud
-    { x: 35, y: -3, size: 19, speed: 0.23 },    // Left-center cloud
-    { x: 65, y: -7, size: 21, speed: 0.19 },    // Right-center cloud
-    { x: 95, y: -15, size: 17, speed: 0.21 },   // Far right cloud
-    { x: 10, y: -6, size: 23, speed: 0.16 }     // Additional left cloud
-  ];
+  // Memoize cloud elements
+  const cloudElements = useMemo(() => 
+    CLOUDS.map((cloud, index) => (
+      <img
+        key={index}
+        src="/media/cloud.png"
+        alt=""
+        className="absolute max-w-[90vw] mix-blend-screen will-change-transform"
+        style={getCloudStyles(
+          cloud.x,
+          cloud.y,
+          cloud.size,
+          cloud.speed
+        )}
+      />
+    )),
+    [getCloudStyles]
+  );
+
+  const scrollToMemorial = useCallback(() => {
+    const memorialSection = document.getElementById('memorial-services');
+    if (memorialSection) {
+      memorialSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);
 
   return (
     <section
-      className="relative min-h-screen flex items-center justify-center text-white pt-20 overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center text-white pt-20 overflow-hidden will-change-scroll"
       role="banner"
       aria-label="Welcome to Rainbow Paws"
     >
-      {/* Video Background & Overlay */}
+      {/* Video Background with enhanced blur effect */}
       <div className="absolute inset-0 z-0">
         {/* Enhanced multi-layered gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/95 via-primary/80 to-background/90 z-20" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-black/60 z-15" />
-        <div className="absolute inset-0 bg-black/20 z-10" /> {/* Additional overlay for better text contrast */}
-        <video
-          autoPlay muted loop playsInline
-          preload="auto"
-          className="w-full h-full object-cover scale-105 transform blur-[3px]"
-          aria-hidden="true"
-          ref={(el) => {
-            if (el) {
-              el.playbackRate = 0.75;
-            }
-          }}
-        >
-          <source src="/media/hero-background.mp4" type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <div className="absolute inset-0 bg-black/20 z-10" />
+        
+        {/* Blurred video container */}
+        <div className="absolute inset-0 overflow-hidden">
+          <video
+            autoPlay muted loop playsInline
+            preload="auto"
+            className="w-full h-full object-cover scale-110 transform blur-md filter saturate-[0.85] brightness-[0.85]"
+            aria-hidden="true"
+            ref={(el) => {
+              if (el) {
+                el.playbackRate = 0.75;
+              }
+            }}
+          >
+            <source src="/media/hero-background.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
       </div>
 
       {/* Enhanced Cloud Layer with better visibility */}
       <div className="absolute inset-0 z-[25] pointer-events-none overflow-visible">
-        {clouds.map((cloud, index) => (
-          <img
-            key={index}
-            src="/media/cloud.png"
-            alt=""
-            className="absolute max-w-[90vw] mix-blend-screen"
-            style={getCloudStyles(
-              cloud.x,
-              cloud.y,
-              cloud.size,
-              cloud.speed
-            )}
-          />
-        ))}
+        {cloudElements}
       </div>
 
       {/* Content */}
@@ -171,12 +193,7 @@ export function Hero() {
       >
         <div 
           className="relative group cursor-pointer"
-          onClick={() => {
-            const memorialSection = document.getElementById('memorial-services');
-            if (memorialSection) {
-              memorialSection.scrollIntoView({ behavior: 'smooth' });
-            }
-          }}
+          onClick={scrollToMemorial}
         >
           <div className="absolute -inset-2.5 bg-primary/20 rounded-full blur-lg animate-pulse group-hover:scale-110 transition-transform duration-300" />
           <ChevronDown

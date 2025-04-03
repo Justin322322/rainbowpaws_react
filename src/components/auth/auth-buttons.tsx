@@ -1,7 +1,5 @@
-"use client"
-
-import { LoginDialog } from './login-dialog'
-import { SignupDialog } from './signup-dialog'
+import { LoginDialog } from "./login-dialog"
+import { SignupDialog } from "./signup-dialog"
 
 export function AuthButtons() {
   return (
