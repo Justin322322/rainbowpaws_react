@@ -3,8 +3,8 @@
   publish = ".next"
 
 [build.environment]
-  NEXT_USE_TURBO = "1"
-  NODE_VERSION = "18"
+  NEXT_PUBLIC_SUPABASE_URL = "https://pxtakrpkzzpbrlbkykav.supabase.co"
+  NEXT_PUBLIC_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4dGFrcnBrenpwYnJsYmt5a2F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI2NjM3MzEsImV4cCI6MjA1ODIzOTczMX0.r5B4VrR4kHOIcJ-FFlqhvUg0P3pi2i9HDAZ9U1xpqp0"
 
 # Handle Next.js routing
 [[plugins]]
