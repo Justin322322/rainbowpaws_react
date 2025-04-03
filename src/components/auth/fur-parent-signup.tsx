@@ -3,7 +3,6 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Eye, EyeOff } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
-import { useRouter } from 'next/navigation'
 import * as z from 'zod'
 import { Button } from '../ui/button'
 
@@ -32,8 +31,11 @@ const furParentSignupSchema = z.object({
   path: ['confirmPassword']
 })
 
-export function FurParentSignup({ onShowPrivacyPolicy }: { onShowPrivacyPolicy: () => void }) {
-  const router = useRouter()
+interface FurParentSignupProps {
+  onShowPrivacyPolicy: () => void
+}
+
+export function FurParentSignup({ onShowPrivacyPolicy }: FurParentSignupProps) {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)

@@ -1,9 +1,17 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = 'https://pxtakrpkzzpbrlbkykav.supabase.co'
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB4dGFrcnBrenpwYnJsYmt5a2F2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI2NjM3MzEsImV4cCI6MjA1ODIzOTczMX0.r5B4VrR4kHOIcJ-FFlqhvUg0P3pi2i9HDAZ9U1xpqp0'
+if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
+  throw new Error('Missing environment variable NEXT_PUBLIC_SUPABASE_URL')
+}
 
-export const supabase = createClient(supabaseUrl, supabaseKey)
+if (!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  throw new Error('Missing environment variable NEXT_PUBLIC_SUPABASE_ANON_KEY')
+}
+
+export const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+)
 
 export const getDashboardPath = (role: string) => {
   switch (role.toLowerCase()) {

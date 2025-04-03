@@ -30,7 +30,7 @@ export function SignupDialog() {
   return (
     <>
       <Dialog open={showUserTypeDialog} onOpenChange={setShowUserTypeDialog}>
-        <DialogTrigger asChild id="signup-trigger">
+        <DialogTrigger asChild>
           <Button variant="default" onClick={() => setShowUserTypeDialog(true)}>Join Us</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[550px] p-8">
@@ -84,7 +84,6 @@ export function SignupDialog() {
           {selectedUserType === 'furParent' ? (
             <FurParentSignup onShowPrivacyPolicy={() => setShowPrivacyPolicy(true)} />
           ) : (
-            // We'll create a separate ServiceProviderSignup component later
             <div>Service Provider signup form will be here</div>
           )}
         </DialogContent>

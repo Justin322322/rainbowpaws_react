@@ -1,22 +1,19 @@
-import { supabase } from '@/lib/supabase'
 import { redirect } from 'next/navigation'
+import { supabase } from '@/lib/supabase'
 
 export default async function ServiceProviderDashboard() {
   const { data: { session } } = await supabase.auth.getSession()
-  const { data: { user: { user_metadata } } } = await supabase.auth.getUser()
+  const { data: { user } } = await supabase.auth.getUser()
 
-  if (!session || user_metadata.role !== 'serviceProvider') {
+  if (!session || !user?.user_metadata?.role || user.user_metadata.role !== 'serviceProvider') {
     redirect('/')
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Service Provider Dashboard</h1>
-      <div className="grid gap-6">
-        <div className="p-6 bg-card rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-4">Welcome, {user_metadata.businessName || user_metadata.firstName}</h2>
-          <p className="text-muted-foreground">Manage your services and appointments here.</p>
-        </div>
+    <div className="container mx-auto py-8">
+      <h1 className="text-2xl font-bold mb-4">Welcome, {user.user_metadata.first_name}!</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Dashboard content will go here */}
       </div>
     </div>
   )
